@@ -18,6 +18,6 @@ python src/pagerduty_autoack.py
 Docker:
 
 ```bash
-docker build -t pagerduty_autoack .
-docker run -d --name "py-pagerduty-autoack" -e API_KEY="abc123" -e REGEX="Regex search value" -e QUERYINTERVAL="200" --init pagerduty_autoack
+docker build -t pagerduty_autoack:latest .
+docker run -d --name "py-pagerduty-autoack" -e API_KEY="abc123" -e REGEX="Regex search value" -e QUERYINTERVAL="200" --init pagerduty_autoack:latest
 ```
