@@ -33,7 +33,6 @@ def update_incidents(session, incidents, regex, status):
         else:
             print(f"Skipping triggered incident: {id} - {title}")
 
-
 def main():
     API_KEY = os.environ.get('API_KEY')
     session = pdpyras.APISession(API_KEY)
