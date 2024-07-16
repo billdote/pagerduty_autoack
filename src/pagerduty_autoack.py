@@ -30,6 +30,9 @@ def update_incidents(session, incidents, regex, status):
             session.rput('incidents', json=payload)
             
             print(f"{status.capitalize()} incident ID {id}.")
+        else:
+            print(f"Skipping triggered incident: {id} - {title}")
+
 
 def main():
     API_KEY = os.environ.get('API_KEY')
