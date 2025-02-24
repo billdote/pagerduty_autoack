@@ -7,6 +7,7 @@ pipeline {
 
   options {
     disableConcurrentBuilds()
+    timeout(time: 30, unit: 'MINUTES')
   }
 
   environment {
@@ -18,13 +19,11 @@ pipeline {
 
   stages {
     stage('Git Checkout') {
-      options { timeout(time: 30, unit: 'MINUTES') }
       steps {
         git branch: 'main', url: 'https://github.com/billdote/pagerduty_autoack.git'
       }
     }
     stage('Build') {
-      options { timeout(time: 30, unit: 'MINUTES') }
       steps {
         script {
           docker.build("${env.imageId}")
@@ -32,7 +31,6 @@ pipeline {
       }
     }
     stage('Test') {
-      options { timeout(time: 30, unit: 'MINUTES') }
       steps {
         withCredentials([string(credentialsId: 'pagerduty_api_key', variable: 'API_KEY')]) {
           script {
