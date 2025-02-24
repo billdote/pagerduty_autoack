@@ -5,6 +5,10 @@ pipeline {
     pollSCM('H/5 * * * *')
   }
 
+  options {
+    disableConcurrentBuilds()
+  }
+
   environment {
     imageId = "pagerduty_autoack:latest"
     containerName = "py-pagerduty-autoack"
