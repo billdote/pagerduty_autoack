@@ -1,9 +1,14 @@
-FROM cgr.dev/chainguard/python:latest-dev AS dev
+FROM cgr.dev/chainguard/python:latest-dev AS builder
+
+ENV LANG=C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PATH="/app/venv/bin:$PATH"
 
 # create app directory and bundle app source in a virutal env
 WORKDIR /app
+USER root
 RUN python -m venv venv
-ENV PATH="/app/venv/bin:$PATH"
 COPY src/ ./
 
 # install app dependencies
@@ -12,8 +17,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # copy latest-dev env to a minimal runtime image
 FROM cgr.dev/chainguard/python:latest
 
-WORKDIR /app
-COPY --from=dev /app ./
+ENV PYTHONUNBUFFERED=1
 ENV PATH="/app/venv/bin:$PATH"
 
-ENTRYPOINT [ "python", "-u", "pagerduty_autoack.py" ]
+WORKDIR /app
+COPY --from=builder /app ./
+
+ENTRYPOINT [ "python", "pagerduty_autoack.py" ]
