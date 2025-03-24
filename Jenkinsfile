@@ -51,7 +51,7 @@ pipeline {
                 echo "Container status is ${state}. Test passed."
               }   else {
                 sh 'docker logs "${containerName}"'
-                error('Container status is ${state}. Test failed.')
+                error("Container status is ${state}. Test failed.")
               }
             }
           }
