@@ -9,13 +9,11 @@ def get_user(session):
         id = response.json()['user']['id']
     else:
         raise Exception('Failed to get user.')
-
     return id
 
 def get_incidents(session, user):
     query_string = {"date_range":"all","user_ids[]":user,"statuses[]":"triggered"}
     response = session.list_all('incidents', params=query_string)
-
     return response
 
 def update_incidents(session, incidents, regex, status):
